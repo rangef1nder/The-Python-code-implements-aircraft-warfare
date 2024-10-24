@@ -1,0 +1,14 @@
+1.如果是使用提供的requirement配置的环境，应该不需要手动下载pygame了，如果没有用requirement的话，需要pip install pygame
+2.出现“libGL error: MESA-LOADER: failed to open iris”问题：
+    我在ubuntu上运行程序时，出现了此报错。解决方法参考“https://blog.csdn.net/weixin_43686259/article/details/141135736?ops_request_misc=%257B%2522request%255Fid%2522%253A%25228F364008-E644-47D7-9941-9DB5B45F5DBC%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=8F364008-E644-47D7-9941-9DB5B45F5DBC&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-141135736-null-null.142^v100^pc_search_result_base5&utm_term=libGL%20error%3A%20MESA-LOADER%3A%20failed%20to%20open%20iris%3A%20%2Fusr%2Flib%2Fdri%2Firis_dri.so%3A%20cannot%20open%20shared%20object%20file%3A%20No%20such%20file%20or%20directory%20%28search%20paths%20%2Fusr%2Flib%2Fx86_64-linux-gnu%2Fdri%3A%5C%24%24%7BORIGIN%7D%2Fdri%3A%2Fusr%2Flib%2F&spm=1018.2226.3001.4187”
+    1）将/lib/x86_64-linux-gnu/dri/中的iris_dri.so、swrast_dri.so复制到/usr/lib/dri下，如果没有/usr/lib/dri路径，创建目录
+    sudo mkdir /usr/lib/dri
+    sudo cp /lib/x86_64-linux-gnu/dri/iris_dri.so /usr/lib/dri
+    sudo cp /lib/x86_64-linux-gnu/dri/swrast_dri.so /usr/lib/dri
+    2）找到自己的虚拟环境位置，为conda环境下的libstdc++.so.6 建立软链接
+    cd /home/用户名/anconda3/envs/虚拟环境名/lib
+    mkdir backup
+    mv libstd* backup # 这里可以看到libstdc++的版本
+    cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6  ./
+    ln -s libstdc++.so.6 libstdc++.so
+    ln -s libstdc++.so.6 libstdc++.so.6.0.29 # 这里的版本取决于自己环境中的版本
